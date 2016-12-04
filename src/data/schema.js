@@ -20,8 +20,15 @@ type Test {
   results: Result
 }
 
+type Todo {
+  id: String
+  text: String!
+  complete: Boolean!
+}
+
 type Query {
-  test(id:String, type:String): [Test]
+  tests(id:String, type:String): [Test]
+  todos: [Todo]
 }
 
 schema {

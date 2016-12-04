@@ -19,6 +19,12 @@ const TestSchema = new Schema({
   }
 })
 
-const Test = mongoose.model('Test', TestSchema)
+const TodoSchema = new Schema({
+  text: String,
+  complete: Boolean,
+})
 
-export { Test };
+const Test = mongoose.model('Test', TestSchema)
+const Todo = mongoose.model('Todo', TodoSchema)
+
+export { Test, Todo };

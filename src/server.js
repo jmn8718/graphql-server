@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
-import logger from 'morgan';
+import morgan from 'morgan';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
@@ -19,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 app.set('port', PORT);
 
 if (process.env.ENV === 'development') {
-  app.use(logger('dev'));
+  app.use(morgan(':id :method :url :response-time'));
 }
 /*
  view engine setup
@@ -31,6 +32,7 @@ app.set('view engine', 'ejs');
 // parse body params and attache them to req.body
 app.use(bodyParser.json({}));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 const executableSchema = makeExecutableSchema({
   typeDefs: Schema,
