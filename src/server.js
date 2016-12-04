@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
@@ -7,7 +8,9 @@ import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 import Schema from './data/schema';
 import Mocks from './data/mock';
 import Resolvers from './data/resolvers';
-
+/*
+ Connection to Mongo DB
+ */
 import db from './db';
 
 var app = express();
@@ -18,6 +21,12 @@ app.set('port', PORT);
 if (process.env.ENV === 'development') {
   app.use(logger('dev'));
 }
+/*
+ view engine setup
+  */
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 
 // parse body params and attache them to req.body
 app.use(bodyParser.json({}));
@@ -39,6 +48,9 @@ app.use('/graphql', graphqlExpress({ schema: executableSchema }));
 app.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
 }));
+
+import routes from './routes';
+app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

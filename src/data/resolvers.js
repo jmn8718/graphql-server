@@ -8,12 +8,12 @@ const resolveFunctions = {
         query['identifiers.build_serial'] = args.id;
       }
       return new Promise((resolve, reject) => {
-        Test.find(query, (err, results) => {
-          // console.log(err, results)
+        Test.find(query, (err, tests) => {
+          // console.log(err, tests)
           if (err) {
             reject(err)
           }
-          resolve(results)
+          resolve(tests)
         })
       })
     }
