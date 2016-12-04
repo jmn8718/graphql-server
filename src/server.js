@@ -6,6 +6,9 @@ import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 
 import Schema from './data/schema';
 import Mocks from './data/mock';
+import Resolvers from './data/resolvers';
+
+import db from './db';
 
 var app = express();
 
@@ -22,13 +25,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const executableSchema = makeExecutableSchema({
   typeDefs: Schema,
+  resolvers: Resolvers,
 });
 
-addMockFunctionsToSchema({
-  schema: executableSchema,
-  mocks: Mocks,
-  preserveResolvers: true,
-});
+// addMockFunctionsToSchema({
+//   schema: executableSchema,
+//   mocks: Mocks,
+//   preserveResolvers: true,
+// });
 
 app.use('/graphql', graphqlExpress({ schema: executableSchema }));
 
