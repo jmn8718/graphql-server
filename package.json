@@ -6,7 +6,7 @@
   "author": "Jose Miguel Navarro <jmn8718@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/index.js --exec babel-node"
+    "start": "nodemon src/index.js --exec babel-node",
   },
   "dependencies": {
     "body-parser": "^1.15.2",

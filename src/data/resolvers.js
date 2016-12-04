@@ -5,11 +5,11 @@ const resolveFunctions = {
     test(root, args) {
       const query = {};
       if (args.id) {
-        query._id = args.id;
+        query['identifiers.build_serial'] = args.id;
       }
       return new Promise((resolve, reject) => {
         Test.find(query, (err, results) => {
-          console.log(err, results)
+          // console.log(err, results)
           if (err) {
             reject(err)
           }
