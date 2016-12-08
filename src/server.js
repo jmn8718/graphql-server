@@ -3,6 +3,9 @@ import path from 'path';
 import morgan from 'morgan';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import passport from 'passport';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 
@@ -32,7 +35,22 @@ app.set('view engine', 'ejs');
 // parse body params and attache them to req.body
 app.use(bodyParser.json({}));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(cors());
+
+app.use(session({ secret: 'secret' }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// PassportJS auth information to be serialized into a session
+passport.serializeUser(function(user, done) {
+    done(null, user.uid);
+});
+
+// PassportJS auth information to be deserialized from the session
+passport.deserializeUser(function(userId, done) {
+    done(null, userId);
+});
 
 const executableSchema = makeExecutableSchema({
   typeDefs: Schema,

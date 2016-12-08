@@ -1,0 +1,14 @@
+{
+  "mongo": {
+    "endpoint": "172.17.0.5",
+    "port": 27017,
+    "db": "graphql"
+  },
+  "couchbase": {
+    "server": {
+      "endpoint": "172.18.0.2",
+      "port": 8091,
+      "bucket": "default"
+    }
+  }
+}
