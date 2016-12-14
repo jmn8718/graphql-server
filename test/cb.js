@@ -1,8 +1,13 @@
-import { User } from '../src/db/couchbase';
+import { User } from '../src/models/user';
 
+const email = 'my@email.com'
 const user = new User({
-  email: 'user',
+  email: email,
   password: 'password',
 });
 
-user.save((err, data) => console.log(err, data));
+user.save((err, data) => {
+  User.findByEmail(email, (error, users) => {
+    console.log(error, users)
+  })
+});
